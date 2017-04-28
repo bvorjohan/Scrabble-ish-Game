@@ -1,4 +1,10 @@
-# The 6.00 Word Game
+# Scrabble-ish v1.00
+# Meant to imitate the scoring system of Scrabble
+# 
+
+# Areas of improvement:
+	# Improve documentation
+	# Ensure proper robust function of decision structure
 
 import random
 import string
