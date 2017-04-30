@@ -3,9 +3,16 @@
 # 
 
 # Areas of improvement:
-	# Improve documentation
+	# Improve documentation (In Progress)
+	# Allow uppercase inputs
 	# Ensure proper robust function of decision structure
+	# Implement UI
+	# Allow different possible word list files
 
+	
+	# ------------------------------------------------------------------------
+	# Loaders
+	
 import random
 import string
 
@@ -17,54 +24,62 @@ SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
-# -----------------------------------
-# Helper code
-# (you don't need to understand this helper code)
 
 WORDLIST_FILENAME = "words.txt"
 
+	# ------------------------------------------------------------------------------
+	# Ititializations
+
 def loadWords():
     """
-    Returns a list of valid words. Words are strings of lowercase letters.
-    
-    Depending on the size of the word list, this function may
-    take a while to finish.
+    Returns a list of valid words from a file (must meet a specific format). Words are strings of lowercase letters.
+    Uses constant filename defined above.
     """
+
     print("Loading word list from file...")
+	
     # inFile: file
     inFile = open(WORDLIST_FILENAME, 'r')
+	
     # wordList: list of strings
     wordList = []
+	
     for line in inFile:
         wordList.append(line.strip().lower())
+	
     print("  ", len(wordList), "words loaded.")
+
     return wordList
+
+	# -------------------------------------------------------------------
+	# Code functions
 
 def getFrequencyDict(sequence):
     """
     Returns a dictionary where the keys are elements of the sequence
     and the values are integer counts, for the number of times that
     an element is repeated in the sequence.
+    In other words: turns a string/list into a discrete fourier transform of that string/list
 
     sequence: string or list
     return: dictionary
     """
+
     # freqs: dictionary (element_type -> int)
     freq = {}
+
     for x in sequence:
+		
+	# .get() returns 0 if there is no entry.
         freq[x] = freq.get(x,0) + 1
     return freq
 	
 
-# (end of helper code)
-# -----------------------------------
 
-#
-# Problem #1: Scoring a word
-#
 def getWordScore(word, n):
     """
     Returns the score for a word. Assumes the word is a valid word.
+    Utilizes 
 
     The score for a word is the sum of the points for letters in the
     word, multiplied by the length of the word, PLUS 50 points if all n
@@ -77,20 +92,19 @@ def getWordScore(word, n):
     n: integer (HAND_SIZE; i.e., hand size required for additional points)
     returns: int >= 0
     """
+
+    # score: sum of ( letter * (respective letter score) )
     score=0
     for letter in word:
         score=score+SCRABBLE_LETTER_VALUES[letter]
+	
     if n==len(word):
         return score*len(word)+50
+
     return score*len(word)
     
-    # TO DO ... <-- Remove this comment when you code this function
+    
 
-
-
-#
-# Problem #2: Make sure you understand how this function works and what it does!
-#
 def displayHand(hand):
     """
     Displays the letters currently in the hand.
